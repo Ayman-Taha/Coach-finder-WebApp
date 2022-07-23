@@ -6,7 +6,7 @@
     <base-card>
       <div class="controls">
         <base-button mode="outline">Refresh</base-button>
-        <base-button to="/register">Register</base-button>
+        <base-button to="register">Register</base-button>
       </div>
       <ul v-if="hasCoaches">
         <coach-item
@@ -25,11 +25,11 @@
 </template>
 
 <script>
-import coachItem from '../../components/coaches/coachItem.vue';
+import CoachItem from '../../components/coaches/CoachItem.vue';
 import CoachFilter from '../../components/coaches/CoachFilter.vue';
 
 export default {
-  components: { coachItem, CoachFilter },
+  components: { CoachItem, CoachFilter },
   data() {
     return {
       activeFilters: {

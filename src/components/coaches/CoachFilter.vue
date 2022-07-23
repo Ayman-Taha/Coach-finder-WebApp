@@ -7,7 +7,7 @@
       <input type="checkbox" id="backend" checked @change="setFilter" />
       <label for="backend">Back End</label>
       <input type="checkbox" id="career" checked @change="setFilter" />
-      <label for="career">career</label>
+      <label for="career">Career</label>
     </span>
   </base-card>
 </template>
