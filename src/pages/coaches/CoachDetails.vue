@@ -9,9 +9,8 @@
     <base-card>
       <header>
         <h2>Reach out!</h2>
-        <base-button link :to="selectedCoach.contactLink">Contact</base-button>
+        <base-button :link="true" :to="coachContactLink">Contact</base-button>
       </header>
-      <router-view></router-view>
     </base-card>
   </section>
   <section>
@@ -40,7 +39,7 @@ export default {
       return `${this.selectedCoach.firstName} ${this.selectedCoach.lastName}`;
     },
     coachContactLink() {
-      return `${this.$route.path}/${this.id}/contact`;
+      return `${this.$route.path}/contact`;
     },
   },
   created() {
