@@ -49,15 +49,15 @@ export default {
     validateForm() {
       this.formIsValid = true;
       if (
-        this.email === '' ||
-        this.email.includes('@') ||
-        this.message === ''
+        !/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(
+          this.email.value
+        )
       ) {
         this.email.isValid = false;
         this.formIsValid = false;
       }
       if (this.message.value === '') {
-        this.lastname.isValid = false;
+        this.message.isValid = false;
         this.formIsValid = false;
       }
     },
