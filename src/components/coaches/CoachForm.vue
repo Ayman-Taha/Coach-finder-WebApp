@@ -78,7 +78,9 @@
       </div>
       <p v-if="!areas.isValid">At least one area of expertise is required</p>
     </div>
-    <p v-if="!formIsValid">Please make sure the form is filled correctly</p>
+    <p class="errors" v-if="!formIsValid">
+      Please make sure the form is filled correctly
+    </p>
     <base-button>Register</base-button>
   </form>
 </template>
@@ -210,5 +212,10 @@ h3 {
 .invalid input,
 .invalid textarea {
   border: 1px solid red;
+}
+
+.errors {
+  font-weight: bold;
+  color: red;
 }
 </style>
