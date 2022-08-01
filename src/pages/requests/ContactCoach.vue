@@ -64,6 +64,14 @@ export default {
     submitForm() {
       this.validateForm();
       if (!this.formIsValid) return;
+      const requestData = {
+        email: this.email,
+        message: this.message,
+        coachId: this.$route.params.id,
+      };
+      this.$store.dispatch('requests/contactCoach', requestData);
+
+      this.$router.replace('/coaches');
     },
   },
 };
