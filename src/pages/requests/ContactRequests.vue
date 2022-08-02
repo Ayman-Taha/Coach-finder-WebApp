@@ -6,8 +6,8 @@
         <request-item
           v-for="request in receivedRequests"
           :key="request.id"
-          :email="request.email"
-          :message="request.message"
+          :email="request.email.value"
+          :message="request.message.value"
         ></request-item>
       </ul>
       <h3 v-else>You don't have requests yet.</h3></base-card
@@ -22,10 +22,10 @@ export default {
   components: { RequestItem },
   computed: {
     receivedRequests() {
-      return this.$stire.getters['requests/requests'];
+      return this.$store.getters['requests/requests'];
     },
     hasRequests() {
-      return this.$stire.getters['requests/hasRequests'];
+      return this.$store.getters['requests/hasRequests'];
     },
   },
 };
