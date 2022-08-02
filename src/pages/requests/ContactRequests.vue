@@ -2,14 +2,24 @@
   <section>
     <base-card>
       <header><h2>Requests Received</h2></header>
-      <ul v-if="hasRequests"></ul>
+      <ul v-if="hasRequests">
+        <request-item
+          v-for="request in receivedRequests"
+          :key="request.id"
+          :email="request.email"
+          :message="request.message"
+        ></request-item>
+      </ul>
       <h3 v-else>You don't have requests yet.</h3></base-card
     >
   </section>
 </template>
 
 <script>
+import RequestItem from '../../components/requests/RequestItem.vue';
+
 export default {
+  components: { RequestItem },
   computed: {
     receivedRequests() {
       return this.$stire.getters['requests/requests'];
