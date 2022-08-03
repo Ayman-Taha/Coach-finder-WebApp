@@ -1,5 +1,5 @@
 export default {
-  registerCoach(context, data) {
+  async registerCoach(context, data) {
     const coachData = {
       id: context.rootGetters.userId,
       firstName: data.first,
@@ -9,9 +9,17 @@ export default {
       areas: data.areas,
     };
 
-    fetch(
-      'https://console.firebase.google.com/project/vue-find-coach-23a5c/database/vue-find-coach-23a5c-default-rtdb/data/~2F'
+    const response = await fetch(
+      `https://vue-find-coach-23a5c-default-rtdb.firebaseio.com/coaches/${coachData.id}.json`,
+      {
+        method: 'PUT',
+        body: JSON.stringify(coachData),
+      }
     );
+
+    if (!response.ok) {
+      console.log('error!!');
+    }
     context.commit('registerCoach', coachData);
   },
 };
