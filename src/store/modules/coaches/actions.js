@@ -31,7 +31,8 @@ export default {
     const resData = await res.json();
 
     if (!res.ok) {
-      console.log('error!!');
+      const error = new Error(resData.message || 'Failed to load coaches');
+      throw error;
     }
 
     const coaches = [];
