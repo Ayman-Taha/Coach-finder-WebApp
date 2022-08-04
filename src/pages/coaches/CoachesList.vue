@@ -43,6 +43,7 @@ export default {
         career: true,
       },
       isLoading: false,
+      error: null,
     };
   },
   created() {
@@ -54,7 +55,11 @@ export default {
     },
     async loadCoaches() {
       this.isLoading = true;
-      await this.$store.dispatch('coaches/loadCoaches');
+      try {
+        await this.$store.dispatch('coaches/loadCoaches');
+      } catch (err) {
+        this.error = err.message || 'Something went wrong!!';
+      }
       this.isLoading = false;
     },
   },
