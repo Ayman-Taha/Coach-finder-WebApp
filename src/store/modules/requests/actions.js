@@ -1,8 +1,8 @@
 export default {
   async contactCoach(context, data) {
     const request = {
-      email: data.email,
-      message: data.message,
+      email: data.email.value,
+      message: data.message.value,
     };
 
     const res = await fetch(
@@ -44,7 +44,7 @@ export default {
       const request = {
         id: key,
         coachId: coachId,
-        userEmail: resData[key].userEmail,
+        email: resData[key].email,
         message: resData[key].message,
       };
       requests.push(request);

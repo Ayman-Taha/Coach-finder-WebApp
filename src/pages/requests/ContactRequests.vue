@@ -12,8 +12,8 @@
         <request-item
           v-for="request in receivedRequests"
           :key="request.id"
-          :email="request.email.value"
-          :message="request.message.value"
+          :email="request.email"
+          :message="request.message"
         ></request-item>
       </ul>
       <h3 v-else>You don't have requests yet.</h3></base-card
@@ -36,7 +36,7 @@ export default {
     this.loadRequests();
   },
   methods: {
-    async loadCoaches() {
+    async loadRequests() {
       this.isLoading = true;
       try {
         await this.$store.dispatch('requests/loadRequests');

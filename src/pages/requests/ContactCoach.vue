@@ -88,16 +88,6 @@ export default {
       } catch (err) {
         this.error = err.message || 'Something went wrong!!';
       }
-      this.isLoading = false;
-      this.$router.replace('/coaches');
-
-      const requestData = {
-        email: this.email,
-        message: this.message,
-        coachId: this.$route.params.id,
-      };
-      this.$store.dispatch('requests/contactCoach', requestData);
-
       this.$router.replace('/coaches');
     },
     handleError() {
