@@ -20,6 +20,11 @@ import RequestItem from '../../components/requests/RequestItem.vue';
 
 export default {
   components: { RequestItem },
+  methods: {
+    async loadCoaches() {
+      await this.$store.dispatch('requests/loadRequests');
+    },
+  },
   computed: {
     receivedRequests() {
       return this.$store.getters['requests/requests'];
