@@ -1,30 +1,40 @@
 <template>
-  <form @submit.prevent="submitForm">
-    <div class="form-control" :class="{ invalid: !email.isValid }">
-      <label for="email">Enter your email:</label>
-      <input
-        type="email"
-        id="email"
-        v-model.trim="email.value"
-        @blur="clearFieldWarning('email')"
-      />
-      <p v-if="!email.isValid">Please enter a valid email</p>
+  <base-dialog :show="!!error" title="An error happened!" @close="handleError">
+    <p>{{ error }}</p>
+  </base-dialog>
+  <base-card>
+    <div v-if="isLoading">
+      <base-spinner></base-spinner>
     </div>
-    <div class="form-control" :class="{ invalid: !message.isValid }">
-      <label for="message">Enter your message:</label>
-      <textarea
-        rows="6"
-        id="message"
-        v-model.trim="message.value"
-        @blur="clearFieldWarning('message')"
-      ></textarea>
-      <p v-if="!message.isValid" class="errors">Please enter a valid message</p>
-    </div>
-    <p v-if="!formIsValid">Please make sure the form is filled correctly</p>
-    <div class="actions">
-      <base-button>Send Message</base-button>
-    </div>
-  </form>
+    <form v-else @submit.prevent="submitForm">
+      <div class="form-control" :class="{ invalid: !email.isValid }">
+        <label for="email">Enter your email:</label>
+        <input
+          type="email"
+          id="email"
+          v-model.trim="email.value"
+          @blur="clearFieldWarning('email')"
+        />
+        <p v-if="!email.isValid">Please enter a valid email</p>
+      </div>
+      <div class="form-control" :class="{ invalid: !message.isValid }">
+        <label for="message">Enter your message:</label>
+        <textarea
+          rows="6"
+          id="message"
+          v-model.trim="message.value"
+          @blur="clearFieldWarning('message')"
+        ></textarea>
+        <p v-if="!message.isValid" class="errors">
+          Please enter a valid message
+        </p>
+      </div>
+      <p v-if="!formIsValid">Please make sure the form is filled correctly</p>
+      <div class="actions">
+        <base-button>Send Message</base-button>
+      </div>
+    </form>
+  </base-card>
 </template>
 
 <script>
@@ -40,6 +50,8 @@ export default {
         isValid: true,
       },
       formIsValid: true,
+      isLoading: false,
+      error: null,
     };
   },
   methods: {
@@ -61,9 +73,24 @@ export default {
         this.formIsValid = false;
       }
     },
-    submitForm() {
+    async submitForm() {
       this.validateForm();
       if (!this.formIsValid) return;
+
+      this.isLoading = true;
+      try {
+        const requestData = {
+          email: this.email,
+          message: this.message,
+          coachId: this.$route.params.id,
+        };
+        await this.$store.dispatch('requests/contactCoach', requestData);
+      } catch (err) {
+        this.error = err.message || 'Something went wrong!!';
+      }
+      this.isLoading = false;
+      this.$router.replace('/coaches');
+
       const requestData = {
         email: this.email,
         message: this.message,
@@ -72,6 +99,9 @@ export default {
       this.$store.dispatch('requests/contactCoach', requestData);
 
       this.$router.replace('/coaches');
+    },
+    handleError() {
+      this.error = null;
     },
   },
 };

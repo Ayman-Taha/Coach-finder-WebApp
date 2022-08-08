@@ -17,8 +17,11 @@ export default {
       }
     );
 
+    const resData = await res.json();
+
     if (!res.ok) {
-      console.log('error!!');
+      const error = new Error(resData.message || 'Failed to register coach');
+      throw error;
     }
     context.commit('registerCoach', coachData);
   },
