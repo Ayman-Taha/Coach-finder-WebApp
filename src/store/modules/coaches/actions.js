@@ -26,7 +26,11 @@ export default {
     context.commit('registerCoach', coachData);
   },
 
-  async loadCoaches(context) {
+  async loadCoaches(context, payload) {
+    if (!payload.forceRefresh && !context.getters.shouldUpdate) {
+      return;
+    }
+
     const res = await fetch(
       `https://vue-find-coach-23a5c-default-rtdb.firebaseio.com/coaches.json`
     );
@@ -52,5 +56,6 @@ export default {
       coaches.push(coach);
     }
     context.commit('setCoaches', coaches);
+    context.commit('setFetchTimeStamp');
   },
 };
